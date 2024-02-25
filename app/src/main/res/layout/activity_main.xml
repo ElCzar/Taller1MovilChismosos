@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+
+    <Button
+        android:id="@+id/buttonExplorarDestinos"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/explorar_destinos"
+        android:layout_below="@+id/spinnerFiltros"/>
+
+    <Button
+        android:id="@+id/buttonFavoritos"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/favoritos"
+        android:layout_below="@id/buttonExplorarDestinos" />
+
+
+    <Button
+        android:id="@+id/buttonRecomendaciones"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/recomendaciones"
+        android:layout_below="@id/buttonFavoritos"/>
+
+    <Spinner
+        android:id="@+id/spinnerFiltros"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:entries="@array/opciones"/>
+
+</RelativeLayout>

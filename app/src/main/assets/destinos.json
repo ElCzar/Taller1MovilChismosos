@@ -1,0 +1,19 @@
+{
+"destinos":[
+    {"id": 1, "nombre": "Baia do Sancho", "pais": "Brazil", "categoria": "Playas", "plan": "Snorkeling y paseos en barco", "precio": 150},
+    {"id": 2, "nombre": "Eagle Beach", "pais": "Aruba", "categoria": "Playas", "plan": "Relajación y deportes acuáticos", "precio": 200},
+    {"id": 3, "nombre": "El Nido", "pais": "Filipinas", "categoria": "Playas", "plan": "Tour de islas y buceo", "precio": 180},
+    {"id": 4, "nombre": "Monte Everest", "pais": "Nepal/China", "categoria": "Montañas", "plan": "Trekking al campo base", "precio": 1000},
+    {"id": 5, "nombre": "Mont Blanc", "pais": "Francia/Italia", "categoria": "Montañas", "plan": "Ascenso y esquí", "precio": 1500},
+    {"id": 6, "nombre": "Aconcagua", "pais": "Argentina", "categoria": "Montañas", "plan": "Expedición de montañismo", "precio": 3000},
+    {"id": 7, "nombre": "Machu Picchu", "pais": "Perú", "categoria": "Ciudades Históricas", "plan": "Caminata por el Camino Inca", "precio": 500},
+    {"id": 8, "nombre": "Roma", "pais": "Italia", "categoria": "Ciudades Históricas", "plan": "Tour histórico y cultural", "precio": 300},
+    {"id": 9, "nombre": "Petra", "pais": "Jordania", "categoria": "Ciudades Históricas", "plan": "Exploración arqueológica", "precio": 250},
+    {"id": 10, "nombre": "Gran Muralla China", "pais": "China", "categoria": "Maravillas del Mundo", "plan": "Caminata y tour cultural", "precio": 100},
+    {"id": 11, "nombre": "Taj Mahal", "pais": "India", "categoria": "Maravillas del Mundo", "plan": "Visita guiada histórica", "precio": 50},
+    {"id": 12, "nombre": "Pirámides de Giza", "pais": "Egipto", "categoria": "Maravillas del Mundo", "plan": "Tour histórico y de aventura", "precio": 120},
+    {"id": 13, "nombre": "Amazonas", "pais": "Brasil", "categoria": "Selvas", "plan": "Crucero por el río y ecoturismo", "precio": 1500},
+    {"id": 14, "nombre": "Congo", "pais": "República Democrática del Congo", "categoria": "Selvas", "plan": "Safari y observación de gorilas", "precio": 2000},
+    {"id": 15, "nombre": "Borneo", "pais": "Indonesia/Malasia", "categoria": "Selvas", "plan": "Trekking y observación de la vida silvestre", "precio": 1300}
+]
+}
