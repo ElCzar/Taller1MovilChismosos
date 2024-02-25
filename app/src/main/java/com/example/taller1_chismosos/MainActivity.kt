@@ -43,20 +43,20 @@ class MainActivity : AppCompatActivity() {
 
         val buttonRecomendaciones = findViewById<Button>(R.id.buttonRecomendaciones)
         buttonRecomendaciones.setOnClickListener {
-            if(favorites.isEmpty()) {
-                Toast.makeText(applicationContext, "No hay destinos favoritos", Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
-            }
-
             val intent = Intent(this, DetalleDestinoActivity::class.java)
-
-            val random = (0 until favorites.size).random()
 
             val bundle = Bundle()
 
             bundle.putBoolean("random", true)
-            bundle.putString("destino", favorites.elementAt(random))
 
+            val elementDestino = if(favorites.isEmpty()) {
+                "N/A"
+            } else {
+                val random = (0 until favorites.size).random()
+                favorites.elementAt(random)
+            }
+
+            bundle.putString("destino", elementDestino)
             intent.putExtras(bundle)
 
             startActivity(intent)

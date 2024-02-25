@@ -21,12 +21,14 @@ class DetalleDestinoActivity : AppCompatActivity() {
         val previousIntent = intent.extras
         val destino = previousIntent?.getString("destino")
 
-        // Get the details of the destination
-        val detalles = loadJson(destino)
-
         // Set text views
         val nombre = findViewById<TextView>(R.id.textViewNombre)
-        nombre.text = detalles["nombre"]
+        nombre.text = destino
+
+        if (destino == "N/A") return
+
+        // Get the details of the destination
+        val detalles = loadJson(destino)
 
         val detalle = findViewById<TextView>(R.id.textViewDetalle)
         val detalleText = "${detalles["pais"]}\n${detalles["categoria"]}\n${detalles["plan"]}\nUSD ${detalles["precio"]}"
