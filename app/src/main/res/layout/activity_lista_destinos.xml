@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ListaDestinosActivity"
-    android:id="@+id/ListViewDestinos">
+    android:id="@+id/ListViewDestinos"
+    android:padding="10dp">
 
 </ListView>
