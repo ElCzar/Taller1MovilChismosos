@@ -64,7 +64,7 @@ class BindingTry : AppCompatActivity() {
                     binding.textViewLatitude.text = "Latitude: ${location.latitude}"
                     binding.textViewLongitude.text = "Longitude: ${location.longitude}"
                     binding.textViewHeight.text = "Height: ${location.altitude}"
-                    binding.textViewDistanceFromStart.text = "Distance from start: ${distanceFromStart(location.latitude, location.longitude)} km"
+                    binding.textViewDistanceFromStart.text = "Distance from start: ${distanceFromStart(location.latitude, location.longitude)}"
                     //Get current time
                     binding.textViewTime.text = "Time: ${System.currentTimeMillis()}"
                 }
@@ -102,14 +102,14 @@ class BindingTry : AppCompatActivity() {
                 binding.textViewLatitude.text = "Latitude: ${location.latitude}"
                 binding.textViewLongitude.text = "Longitude: ${location.longitude}"
                 binding.textViewHeight.text = "Height: ${location.altitude}"
-                binding.textViewDistanceFromStart.text = "Distance from start: ${distanceFromStart(location.latitude, location.longitude)} km"
+                binding.textViewDistanceFromStart.text = "Distance from start: ${distanceFromStart(location.latitude, location.longitude)}"
                 //Get current time
                 binding.textViewTime.text = "Time: ${System.currentTimeMillis()}"
             }
         }
     }
 
-    private fun distanceFromStart(latitude: Double, longitude: Double) : Double {
+    private fun distanceFromStart(latitude: Double, longitude: Double) : String {
         val startLatitude = 4.7010
         val startLongitude = -74.1461
         val earthRadius = 6371e3
@@ -124,11 +124,16 @@ class BindingTry : AppCompatActivity() {
         val c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a))
 
         // Meters
-        val result = earthRadius * c
+        val resultM = earthRadius * c
+        // Round 2 decimal places
+        val resultInM = "${(resultM*100.0).roundToInt()/100.0} m"
+
         // Kilometers
-        val resultInKm = result / 1000.0
-        // Aproximate to 2 decimal places
-        return (resultInKm*100.0).roundToInt() / 100.0
+        val resultKm = resultM / 1000
+        // Round 2 decimal places
+        val resultInKm = "${(resultKm*100.0).roundToInt()/100.0} km"
+
+        return resultInM
     }
 
     private fun checkPermissionForLocation(activity: AppCompatActivity) {
