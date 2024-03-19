@@ -11,13 +11,21 @@ import androidx.core.content.ContextCompat
 import com.example.taller1_chismosos.PermissionsCode.Companion.LOCATION_PERMISSION_CODE
 import com.example.taller1_chismosos.databinding.ActivityBindingTryBinding
 import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationCallback
+import com.google.android.gms.location.LocationRequest
+import com.google.android.gms.location.LocationResult
 import com.google.android.gms.location.LocationServices
+import com.google.android.gms.location.Priority
 
 class BindingTry : AppCompatActivity() {
+    private var locationPermissionGranted = false
     // View binding
     private lateinit var binding: ActivityBindingTryBinding
     // For getting location
     private lateinit var mFusedLocationClient: FusedLocationProviderClient
+    // For getting location
+    private lateinit var mLocationRequest: LocationRequest
+    private lateinit var mLocationCallback: LocationCallback
 
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,7 +36,6 @@ class BindingTry : AppCompatActivity() {
         // For getting location
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
         checkPermissionForLocation(this)
-
     }
 
     private fun setUpButtons() {
@@ -36,6 +43,34 @@ class BindingTry : AppCompatActivity() {
             getLocation()
         }
     }
+
+    private fun createRequestAndCallback() {
+        mLocationRequest = createLocationRequest()
+        mLocationCallback = object : LocationCallback() {
+            @SuppressLint("SetTextI18n")
+            override fun onLocationResult(locationResult: LocationResult) {
+                val location = locationResult.lastLocation
+                if (location != null) {
+                    binding.textViewLatitude.text = "Latitude: ${location.latitude}"
+                    binding.textViewLongitude.text = "Longitude: ${location.longitude}"
+                    //Get current time
+                    binding.textViewTime.text = "Time: ${System.currentTimeMillis()}"
+                }
+            }
+        }
+
+        startLocationUpdates()
+    }
+
+    @SuppressLint("MissingPermission")
+    private fun startLocationUpdates() {
+        mFusedLocationClient.requestLocationUpdates(mLocationRequest, mLocationCallback, null)
+    }
+
+    private fun createLocationRequest() : LocationRequest =
+        LocationRequest.Builder(Priority.PRIORITY_HIGH_ACCURACY, 10000).apply {
+            setMinUpdateIntervalMillis(5000)
+        }.build()
 
     private fun disableButtons() {
         binding.buttonGetLocation.isEnabled = false
@@ -48,6 +83,8 @@ class BindingTry : AppCompatActivity() {
             if (location != null) {
                 binding.textViewLatitude.text = "Latitude: ${location.latitude}"
                 binding.textViewLongitude.text = "Longitude: ${location.longitude}"
+                //Get current time
+                binding.textViewTime.text = "Time: ${System.currentTimeMillis()}"
             }
         }
     }
@@ -57,6 +94,7 @@ class BindingTry : AppCompatActivity() {
             ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED -> {
                 // Permission already granted
                 setUpButtons()
+                createRequestAndCallback()
             }
 
             shouldShowRequestPermissionRationale(android.Manifest.permission.ACCESS_FINE_LOCATION) -> {
@@ -82,6 +120,7 @@ class BindingTry : AppCompatActivity() {
         } else {
             // Permission granted
             setUpButtons()
+            createRequestAndCallback()
         }
     }
 
@@ -91,6 +130,7 @@ class BindingTry : AppCompatActivity() {
                 if((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
                     // Permission granted
                     setUpButtons()
+                    createRequestAndCallback()
                 } else {
                     // Permission denied
                     disableButtons()
