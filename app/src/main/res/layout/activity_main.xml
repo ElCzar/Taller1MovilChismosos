@@ -37,4 +37,11 @@
         android:layout_centerInParent="true"
         android:entries="@array/opciones"/>
 
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/buttonRecomendaciones"
+        android:text="Prueba"
+        android:id="@+id/buttonPrueba"/>
+
 </RelativeLayout>

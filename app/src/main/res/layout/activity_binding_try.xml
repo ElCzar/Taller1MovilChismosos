@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".BindingTry"
+    android:padding="20dp">
+
+    <TextView
+        android:id="@+id/textViewBindingTry"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Location"
+        android:layout_alignParentTop="true"
+        android:layout_above="@+id/buttonGetLocation"
+        android:gravity="center"
+        android:textSize="30sp" />
+
+    <Button
+        android:id="@+id/buttonGetLocation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="Get Location"
+        android:layout_margin="10dp"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Latitude: "
+        android:layout_below="@+id/buttonGetLocation"
+        android:id="@+id/textViewLatitude"
+        android:gravity="left"
+        android:textSize="20sp" />
+
+    <TextView
+        android:paddingTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Longitude: "
+        android:layout_below="@+id/textViewLatitude"
+        android:id="@+id/textViewLongitude"
+        android:gravity="left"
+        android:textSize="20sp" />
+
+
+
+</RelativeLayout>
