@@ -16,9 +16,9 @@ import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationResult
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.location.Priority
+import kotlin.math.roundToInt
 
 class BindingTry : AppCompatActivity() {
-    private var locationPermissionGranted = false
     // View binding
     private lateinit var binding: ActivityBindingTryBinding
     // For getting location
@@ -38,13 +38,23 @@ class BindingTry : AppCompatActivity() {
         checkPermissionForLocation(this)
     }
 
+    override fun onPause() {
+        super.onPause()
+        stopLocationUpdates()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        startLocationUpdates()
+    }
+
     private fun setUpButtons() {
         binding.buttonGetLocation.setOnClickListener {
             getLocation()
         }
     }
 
-    private fun createRequestAndCallback() {
+    private fun setUpLocationRequestAndCallback() {
         mLocationRequest = createLocationRequest()
         mLocationCallback = object : LocationCallback() {
             @SuppressLint("SetTextI18n")
@@ -53,6 +63,8 @@ class BindingTry : AppCompatActivity() {
                 if (location != null) {
                     binding.textViewLatitude.text = "Latitude: ${location.latitude}"
                     binding.textViewLongitude.text = "Longitude: ${location.longitude}"
+                    binding.textViewHeight.text = "Height: ${location.altitude}"
+                    binding.textViewDistanceFromStart.text = "Distance from start: ${distanceFromStart(location.latitude, location.longitude)} km"
                     //Get current time
                     binding.textViewTime.text = "Time: ${System.currentTimeMillis()}"
                 }
@@ -64,7 +76,13 @@ class BindingTry : AppCompatActivity() {
 
     @SuppressLint("MissingPermission")
     private fun startLocationUpdates() {
-        mFusedLocationClient.requestLocationUpdates(mLocationRequest, mLocationCallback, null)
+        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            mFusedLocationClient.requestLocationUpdates(mLocationRequest, mLocationCallback, null)
+        }
+    }
+
+    private fun stopLocationUpdates() {
+        mFusedLocationClient.removeLocationUpdates(mLocationCallback)
     }
 
     private fun createLocationRequest() : LocationRequest =
@@ -83,10 +101,34 @@ class BindingTry : AppCompatActivity() {
             if (location != null) {
                 binding.textViewLatitude.text = "Latitude: ${location.latitude}"
                 binding.textViewLongitude.text = "Longitude: ${location.longitude}"
+                binding.textViewHeight.text = "Height: ${location.altitude}"
+                binding.textViewDistanceFromStart.text = "Distance from start: ${distanceFromStart(location.latitude, location.longitude)} km"
                 //Get current time
                 binding.textViewTime.text = "Time: ${System.currentTimeMillis()}"
             }
         }
+    }
+
+    private fun distanceFromStart(latitude: Double, longitude: Double) : Double {
+        val startLatitude = 4.7010
+        val startLongitude = -74.1461
+        val earthRadius = 6371e3
+
+        val dLat = Math.toRadians(latitude - startLatitude)
+        val dLon = Math.toRadians(longitude - startLongitude)
+
+        val a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+                Math.cos(Math.toRadians(startLatitude)) * Math.cos(Math.toRadians(latitude)) *
+                Math.sin(dLon/2) * Math.sin(dLon/2)
+
+        val c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a))
+
+        // Meters
+        val result = earthRadius * c
+        // Kilometers
+        val resultInKm = result / 1000.0
+        // Aproximate to 2 decimal places
+        return (resultInKm*100.0).roundToInt() / 100.0
     }
 
     private fun checkPermissionForLocation(activity: AppCompatActivity) {
@@ -94,7 +136,7 @@ class BindingTry : AppCompatActivity() {
             ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED -> {
                 // Permission already granted
                 setUpButtons()
-                createRequestAndCallback()
+                setUpLocationRequestAndCallback()
             }
 
             shouldShowRequestPermissionRationale(android.Manifest.permission.ACCESS_FINE_LOCATION) -> {
@@ -120,7 +162,7 @@ class BindingTry : AppCompatActivity() {
         } else {
             // Permission granted
             setUpButtons()
-            createRequestAndCallback()
+            setUpLocationRequestAndCallback()
         }
     }
 
@@ -130,7 +172,7 @@ class BindingTry : AppCompatActivity() {
                 if((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
                     // Permission granted
                     setUpButtons()
-                    createRequestAndCallback()
+                    setUpLocationRequestAndCallback()
                 } else {
                     // Permission denied
                     disableButtons()

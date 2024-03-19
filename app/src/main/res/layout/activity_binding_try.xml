@@ -46,11 +46,31 @@
         android:textSize="20sp"/>
 
     <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Height: "
+        android:layout_below="@+id/textViewLongitude"
+        android:id="@+id/textViewHeight"
+        android:gravity="left"
+        android:textSize="20sp"
+        android:paddingTop="10dp"/>
+
+    <TextView
         android:id="@+id/textViewTime"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Time: "
-        android:layout_below="@+id/textViewLongitude"
+        android:layout_below="@+id/textViewHeight"
+        android:gravity="left"
+        android:textSize="20sp"
+        android:paddingTop="10dp"/>
+
+    <TextView
+        android:id="@+id/textViewDistanceFromStart"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Distance from start: "
+        android:layout_below="@+id/textViewTime"
         android:gravity="left"
         android:textSize="20sp"
         android:paddingTop="10dp"/>
