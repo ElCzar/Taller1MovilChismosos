@@ -4,4 +4,6 @@
     <string name="favoritos">Favoritos</string>
     <string name="explorar_destinos">Explorar Destinos</string>
     <string name="anadir_a_favoritos">Añadir a Favoritos</string>
+    <string name="title_activity_maps">MapsActivity</string>
+    <string name="search_here">Search Here</string>
 </resources>

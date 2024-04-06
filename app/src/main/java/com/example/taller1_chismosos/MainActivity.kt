@@ -64,7 +64,11 @@ class MainActivity : AppCompatActivity() {
 
         val buttonPrueba = findViewById<Button>(R.id.buttonPrueba)
         buttonPrueba.setOnClickListener {
+            /*
             val intent = Intent(this, BindingTry::class.java)
+            startActivity(intent)
+            */
+            val intent = Intent(this, MapsActivity::class.java)
             startActivity(intent)
         }
     }
