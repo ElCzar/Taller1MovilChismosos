@@ -63,13 +63,20 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {}
         }
 
+
+        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
+        val mapFragment = supportFragmentManager
+            .findFragmentById(R.id.map) as SupportMapFragment
+        mapFragment.getMapAsync(this)
+
+
         // Listener for options fo edit text
         binding.etSearch.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_SEND) {
                 val txt = binding.etSearch.text.toString()
                 if(txt.isNotEmpty() && geocoder != null) {
                     try {
-                        val address = geocoder!!.getFromLocationName(txt, 2)
+                        val address = geocoder!!.getFromLocationName(txt, 2) // Can add 4 parameters to limit the search of the location
 
                         if(!address.isNullOrEmpty()) {
                             val location = address[0]
@@ -99,12 +106,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 false
             }
         }
-
-
-        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-        val mapFragment = supportFragmentManager
-            .findFragmentById(R.id.map) as SupportMapFragment
-        mapFragment.getMapAsync(this)
     }
 
     override fun onResume() {
@@ -153,9 +154,18 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             .icon(bitmapDescriptorFromVector(this, R.drawable.baseline_pets_24)))
         // Move to a location
         mMap!!.moveCamera(CameraUpdateFactory.newLatLng(plazaBolivar))
+
+        // Add a marker if there is a long click
+        mMap!!.setOnMapLongClickListener { latLng ->
+            mMap!!.clear()
+            mMap!!.addMarker(MarkerOptions().position(latLng)
+                .title("Marker in long click")
+                .snippet("Long click")
+                .alpha(0.5F))
+        }
     }
 
-    private fun bitmapDescriptorFromVector(context: Context, vectorResId: Int): BitmapDescriptor? {
+    private fun bitmapDescriptorFromVector(context: Context, vectorResId: Int): BitmapDescriptor {
         val vectorDrawable = ContextCompat.getDrawable(context, vectorResId)
 
         vectorDrawable!!.setBounds(0,
