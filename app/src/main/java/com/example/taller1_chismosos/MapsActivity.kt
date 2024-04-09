@@ -26,6 +26,13 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.MapStyleOptions
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
+    companion object{
+        private const val lowerLeftLatitude = 4.469031
+        private const val lowerLeftLongitude = -74.1366813
+        private const val upperRightLatitude = 4.8166886
+        private const val upperRightLongitude = -74.0143209
+    }
+
     // The map
     private var mMap: GoogleMap? = null
     private var geocoder: Geocoder? = null
@@ -76,7 +83,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 val txt = binding.etSearch.text.toString()
                 if(txt.isNotEmpty() && geocoder != null) {
                     try {
-                        val address = geocoder!!.getFromLocationName(txt, 2) // Can add 4 parameters to limit the search of the location
+                        val address = geocoder!!.getFromLocationName(txt, 2, lowerLeftLatitude, lowerLeftLongitude, upperRightLatitude, upperRightLongitude) // Can add 4 parameters to limit the search of the location
 
                         if(!address.isNullOrEmpty()) {
                             val location = address[0]
@@ -158,8 +165,12 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         // Add a marker if there is a long click
         mMap!!.setOnMapLongClickListener { latLng ->
             mMap!!.clear()
+
+            val location = geocoder!!.getFromLocation(latLng.latitude, latLng.longitude, 1)
+
+
             mMap!!.addMarker(MarkerOptions().position(latLng)
-                .title("Marker in long click")
+                .title("Marker in $location[0]")
                 .snippet("Long click")
                 .alpha(0.5F))
         }
